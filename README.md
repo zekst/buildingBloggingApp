@@ -8,5 +8,5 @@ Technologies used:
 - postgres (storing user and blog information)
 
 ->>Runtime
-cloudfare workers
+- cloudfare workers
 
