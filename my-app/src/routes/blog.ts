@@ -15,6 +15,8 @@ export const blogRouter = new Hono<{
 }>();
 
 blogRouter.use("/*", async (c, next) => {
+
+    //Authorization
     const authHeader = c.req.header("authorization") || "";
     try {
         const user = await verify(authHeader, c.env.JWT_SECRET);
@@ -25,20 +27,22 @@ blogRouter.use("/*", async (c, next) => {
         } else {
             c.status(403);
             return c.json({
-                message: "You are not logged in"
+                message: "You are not loggeder in"
             })
         }
     } catch(e) {
         c.status(403);
         return c.json({
-            message: "You are not logged in"
+            message: e
         })
     }
 });
 
+// creation
+
 blogRouter.post('/', async (c) => {
     const body = await c.req.json();
-    const { success } = createBlogInput.safeParse(body);
+    const { success } = createBlogInput.safeParse(body); // Validating the input
     if (!success) {
         c.status(411);
         return c.json({
@@ -64,6 +68,7 @@ blogRouter.post('/', async (c) => {
     })
 })
 
+//Updation
 blogRouter.put('/', async (c) => {
     const body = await c.req.json();
     const { success } = updateBlogInput.safeParse(body);
@@ -94,6 +99,7 @@ blogRouter.put('/', async (c) => {
 })
 
 // Todo: add pagination
+// Reading the blog(s)
 blogRouter.get('/bulk', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
@@ -115,6 +121,8 @@ blogRouter.get('/bulk', async (c) => {
         blogs
     })
 })
+
+//Reading the specific blog with id
 
 blogRouter.get('/:id', async (c) => {
     const id = c.req.param("id");
