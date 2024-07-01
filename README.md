@@ -7,7 +7,7 @@ Technologies used:
 - prisma (for connection pooling)
 - postgres (storing user and blog information)
 
-->>Runtime
+->>Runtime used
 - cloudfare workers
 
 
