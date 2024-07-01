@@ -10,6 +10,4 @@ Technologies used:
 ->>Runtime
 - cloudfare workers
 
-  Note:
-Deployment issue going on
 
